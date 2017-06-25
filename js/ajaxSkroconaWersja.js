@@ -9,7 +9,7 @@ function pobierzDane(){
     
     
     //otwieramy połaczenie z serwerem , definiujemy gdzie wysyłąmy
-    httpReq.open("GET", "https://mnoidcwi.pl", true );
+    httpReq.open("GET", "http://echo.jsontest.com/userId/108/userName/Akademia108/userURL/akademia108.pl", true );
     
     
     //tworzymy funkcje, w ktorej definiujemy co ma sie wydarzyc gdy serwer odpowie
@@ -18,7 +18,24 @@ function pobierzDane(){
         // jak dane sa gotowe to ich status zmienia sie na 4
         if (httpReq.readyState == 4){
             
+            
+            if(httpReq.status >=200 && httpReq.status < 300 || httpReq.status == 304 || navigator.userAgent.indexOf('Safari') >= 0 && typeof httpReq.status == "undefined"){
+                
+                
+                console.log(httpReq.responseText);
+                var returnData=JSON.parse(httpReq.responseText);
+                
+                
+                console.log(returnData);
+                
+                var userName = document.createElement('p');
+                userName.innerHTML = 'nazwa użytkowanika to : ' + returnData.userName;
+                document.body.appendChild(userName);
+                
+                console.log(userName);
+                
             httpReq = null; // nullem przerywamy połączenie
+            }
         }
     }
     
@@ -27,4 +44,4 @@ function pobierzDane(){
 }
 
 //wywylujemy funkcje
-pobierzDane
+pobierzDane();
